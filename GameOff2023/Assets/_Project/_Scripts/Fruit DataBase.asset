@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe90eeda190bfbc4c86a1855f32c76e0, type: 3}
+  m_Name: Fruit DataBase
+  m_EditorClassIdentifier: 
+  fruits:
+  - name: 
+    color: {r: 1, g: 0, b: 0, a: 0}
+    size: 1
+    mergeScore: 0
+  - name: 
+    color: {r: 1, g: 0.59284186, b: 0, a: 0}
+    size: 1.2
+    mergeScore: 0
+  - name: 
+    color: {r: 1, g: 0.9685757, b: 0, a: 0}
+    size: 1.4
+    mergeScore: 0
+  - name: 
+    color: {r: 0.41543818, g: 1, b: 0, a: 0}
+    size: 1.6
+    mergeScore: 0
+  - name: 
+    color: {r: 0, g: 1, b: 0.443995, a: 0}
+    size: 1.8
+    mergeScore: 0
+  - name: 
+    color: {r: 0, g: 1, b: 0.8273995, a: 0}
+    size: 2
+    mergeScore: 0
+  - name: 
+    color: {r: 0, g: 0.5674076, b: 1, a: 0}
+    size: 2.2
+    mergeScore: 0
+  - name: 
+    color: {r: 0, g: 0.06844139, b: 1, a: 0}
+    size: 2.4
+    mergeScore: 0
+  - name: 
+    color: {r: 0.30212927, g: 0, b: 1, a: 0}
+    size: 2.6
+    mergeScore: 0
+  - name: 
+    color: {r: 0.8643136, g: 0, b: 1, a: 0}
+    size: 2.8
+    mergeScore: 0
+  - name: 
+    color: {r: 1, g: 0, b: 0.619472, a: 0}
+    size: 2
+    mergeScore: 0

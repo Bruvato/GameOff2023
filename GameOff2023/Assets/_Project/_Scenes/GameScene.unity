@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.34311908, g: 0.5822526, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.34311914, g: 0.5822526, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5746,19 +5746,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470e49c28a7d446b5b074119b80c4ff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitList:
-  - {fileID: 4091312456646092282, guid: 7fec32090bffa49bcadc66a89355191d, type: 3}
-  - {fileID: 6374835516768560707, guid: db0c82e5ea82047c4bff3cda93a2d0b6, type: 3}
-  - {fileID: 3710173069066075570, guid: c667f447fdcff4925b529bc6b4e61e3f, type: 3}
-  - {fileID: 6865640992654921145, guid: 803c984e698f64a9bb191bd716cd950a, type: 3}
-  - {fileID: 4093815255814487740, guid: d3c2e678629bf47e4bb6cbc050025503, type: 3}
-  - {fileID: 586556248167873049, guid: be4e00ea580ae484cbcbe3b696e9565c, type: 3}
-  - {fileID: 5660054494095827765, guid: ed8940778680341b7b90bc6b1044f2db, type: 3}
-  - {fileID: 8941410378428691274, guid: 80cf189f544e0407d883177c8446dbd4, type: 3}
-  - {fileID: 8232203221392561011, guid: 9a1d0282b1d8f4c4a9638a1202717975, type: 3}
-  - {fileID: 3234825826445321549, guid: 3306dc9c6a1cb4296a3f4864145c4deb, type: 3}
-  - {fileID: 3414325935898316348, guid: 5b66eb7f872f6448ab04dc6901cfdfa3, type: 3}
+  fruitPrefab: {fileID: 3784525403578733901, guid: a1bfe400722f0fd4c84959d3373c1f33,
+    type: 3}
+  fruitDatabase: {fileID: 11400000, guid: b2eeede9472650e478648d480018b6fe, type: 2}
   spawnPoint: {fileID: 607069999}
+  delay: 1
 --- !u!4 &1637692657
 Transform:
   m_ObjectHideFlags: 0
