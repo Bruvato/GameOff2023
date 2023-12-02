@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,22 +15,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
 
-    [Header("other")]
-    [SerializeField] private GameObject prefab;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-
     }
     private void Update()
     {
         HandleMovement();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ObjectPoolManager.SpawnObject(prefab, transform.position + Vector3.down * 2, quaternion.identity, ObjectPoolManager.PoolType.GameObject);
-        }
+
     }
 
     private void HandleMovement()
@@ -49,4 +46,10 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+
+
+
+
+
 }
