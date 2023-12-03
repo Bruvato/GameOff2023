@@ -9,12 +9,12 @@ public class Fruit : MonoBehaviour
     [SerializeField] public int index;
     [SerializeField] public int mergeScore;
     private FruitManager fruitManager;
-    private Rigidbody rigidbody;
+    private Rigidbody rb;
 
     private void Awake()
     {
         fruitManager = GameObject.Find("FruitManager").GetComponent<FruitManager>();
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
 
@@ -26,7 +26,7 @@ public class Fruit : MonoBehaviour
         {
             if (index == otherFruit.index)
             {
-                if (rigidbody.velocity.magnitude > other.gameObject.GetComponent<Rigidbody>().velocity.magnitude)
+                if (rb.velocity.magnitude > other.gameObject.GetComponent<Rigidbody>().velocity.magnitude)
                 {
                     ObjectPoolManager.ReturnObjectToPool(gameObject);
                     // ObjectPoolManager.ReturnObjectToPool(other.gameObject);
@@ -35,6 +35,7 @@ public class Fruit : MonoBehaviour
                 else
                 {
                     //TODO
+                    Debug.Log("else");
                 }
 
             }

@@ -30,6 +30,15 @@ public class FruitDatabase : ScriptableObject
         fruits[fruits.Length - 1].size = largest;
     }
 
+    public void CalculateColors()
+    {
+        for (int i = 0; i < fruits.Length; i++)
+        {
+            float hue = i * (1f / fruits.Length);
+            fruits[i].color = Color.HSVToRGB(hue, 1, 1);
+        }
+    }
+
     public FruitObject GetFruitObject(int index)
     {
         return fruits[index];

@@ -19,6 +19,7 @@ public class FruitManager : MonoBehaviour
     private void Awake()
     {
         fruitDatabase.CalculateSizes();
+        fruitDatabase.CalculateColors();
 
         SpawnFruit(0, spawnPoint.position);
 
@@ -100,6 +101,9 @@ public class FruitManager : MonoBehaviour
         // Vector3 newScale = new Vector3(fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size);
         // fruit.transform.localScale = Vector3.Lerp(fruit.transform.localScale, newScale, 0.01f * Time.deltaTime);
 
+        // Refresh collision
+        fruit.SetActive(false);
+        fruit.SetActive(true);
 
         // Score += fruit.GetComponent<Fruit>().mergeScore
         fruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
