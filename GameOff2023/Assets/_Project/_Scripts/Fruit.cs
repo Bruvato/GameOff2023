@@ -32,11 +32,6 @@ public class Fruit : MonoBehaviour
                     // ObjectPoolManager.ReturnObjectToPool(other.gameObject);
                     fruitManager.UpgradeFruit(other.gameObject);
                 }
-                else
-                {
-                    //TODO
-                    Debug.Log("else");
-                }
 
             }
         }

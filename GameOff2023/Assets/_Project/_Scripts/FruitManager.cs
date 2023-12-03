@@ -12,6 +12,7 @@ public class FruitManager : MonoBehaviour
     [SerializeField] private FruitDatabase fruitDatabase;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float delay;
+    [SerializeField] private CharacterController characterController;
 
     private GameObject currentFruit;
 
@@ -33,23 +34,11 @@ public class FruitManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                StartCoroutine(DropFruit(true));
+                StartCoroutine(DropFruit());
             }
 
         }
     }
-
-    // private GameObject GetNewFruit()
-    // {
-    //     int index = UnityEngine.Random.Range(0, 4);
-
-    //     GameObject fruit = ObjectPoolManager.SpawnObject(fruitList[index], spawnPoint.position, quaternion.identity, ObjectPoolManager.PoolType.GameObject);
-
-
-    //     currentFruit = fruit;
-
-    //     return fruit;
-    // }
 
     public void SpawnFruit(int index, Vector3 location)
     {
@@ -70,9 +59,12 @@ public class FruitManager : MonoBehaviour
         currentFruit.transform.localScale = new Vector3(fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size);
         currentFruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
 
+        // change player size
+        characterController.radius = fruitDatabase.GetFruitObject(index).size / 2;
+
     }
 
-    public IEnumerator DropFruit(bool respawn = false)
+    public IEnumerator DropFruit()
     {
         currentFruit.GetComponent<Rigidbody>().isKinematic = false;
         currentFruit.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -80,11 +72,10 @@ public class FruitManager : MonoBehaviour
 
         currentFruit = null;
 
-        if (respawn)
-        {
-            yield return new WaitForSeconds(delay);
-            SpawnFruit(0, spawnPoint.position);
-        }
+        // spawn new fruit after drop
+        yield return new WaitForSeconds(delay);
+        SpawnFruit(0, spawnPoint.position);
+
 
     }
 
@@ -107,8 +98,6 @@ public class FruitManager : MonoBehaviour
 
         // Score += fruit.GetComponent<Fruit>().mergeScore
         fruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
-
-
     }
 
 
