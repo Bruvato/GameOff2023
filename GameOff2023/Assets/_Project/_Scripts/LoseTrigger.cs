@@ -6,31 +6,37 @@ using UnityEngine;
 public class LoseTrigger : MonoBehaviour
 {
     private float elapsedTime;
-    [SerializeField] private Material newMaterial;
-    private Material currentMaterial;
-    private void OnTriggerEnter(Collider other)
-    {
-        currentMaterial = other.gameObject.GetComponent<Renderer>().sharedMaterial;
+    private Color currentColor = new Color(1, 0, 0, 0f);
+    [SerializeField] private float duration;
+    private GameManager gameManager;
 
+    private void Awake()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
+
     private void OnTriggerStay(Collider other)
     {
 
         elapsedTime += Time.deltaTime;
         int seconds = Mathf.FloorToInt(elapsedTime % 60);
 
-        if (seconds > 2)
+        if (seconds > 6)
         {
+            gameManager.Restart();
+            elapsedTime = 0;
         }
-
-        float lerp = Mathf.PingPong(elapsedTime, 2) / 2;
-        other.gameObject.GetComponent<Renderer>().sharedMaterial.Lerp(currentMaterial, newMaterial, lerp);
-
+        else if (seconds > 1)
+        {
+            float lerp = Mathf.PingPong(elapsedTime, duration) / duration;
+            gameObject.GetComponent<Renderer>().material.color = Color.Lerp(currentColor, new Color(1, 0, 0, 0.5f), lerp);
+        }
 
     }
     private void OnTriggerExit(Collider other)
     {
-        other.gameObject.GetComponent<Renderer>().sharedMaterial = currentMaterial;
+        gameObject.GetComponent<Renderer>().material.color = currentColor;
         elapsedTime = 0;
     }
+
 }

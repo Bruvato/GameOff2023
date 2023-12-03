@@ -43,4 +43,9 @@ public class FruitDatabase : ScriptableObject
     {
         return fruits[index];
     }
+
+    public FruitObject[] GetFruitsList()
+    {
+        return fruits;
+    }
 }

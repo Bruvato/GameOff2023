@@ -13,6 +13,8 @@ public class FruitManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private float delay;
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private int maxFruitIndex = 4;
+    [SerializeField] private GameObject ExplosionPS;
 
     private GameObject currentFruit;
 
@@ -43,7 +45,7 @@ public class FruitManager : MonoBehaviour
     public void SpawnFruit(int index, Vector3 location)
     {
         // choose random index if i = 0
-        if (index == 0) { index = UnityEngine.Random.Range(0, 4); }
+        if (index == 0) { index = UnityEngine.Random.Range(0, maxFruitIndex); }
 
         // spawn base fruit game object
         currentFruit = ObjectPoolManager.SpawnObject(fruitPrefab, location, quaternion.identity, ObjectPoolManager.PoolType.GameObject);
@@ -62,6 +64,7 @@ public class FruitManager : MonoBehaviour
         // change player size
         characterController.radius = fruitDatabase.GetFruitObject(index).size / 2;
 
+        currentFruit.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public IEnumerator DropFruit()
@@ -81,7 +84,10 @@ public class FruitManager : MonoBehaviour
 
     public void UpgradeFruit(GameObject fruit)
     {
+        // increment index when merge
         fruit.GetComponent<Fruit>().index += 1;
+        // if index out of bounds, rest to 0
+        if (fruit.GetComponent<Fruit>().index >= fruitDatabase.GetFruitsList().Length) { fruit.GetComponent<Fruit>().index = 0; }
         int index = fruit.GetComponent<Fruit>().index;
 
         Material newMaterial = new Material(fruitPrefab.GetComponent<Renderer>().sharedMaterial) { color = fruitDatabase.GetFruitObject(index).color };
@@ -98,6 +104,14 @@ public class FruitManager : MonoBehaviour
 
         // Score += fruit.GetComponent<Fruit>().mergeScore
         fruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
+
+        SpawnEffects(fruit.transform.position);
+    }
+
+    public void SpawnEffects(Vector3 locaiton)
+    {
+        ObjectPoolManager.SpawnObject(ExplosionPS, locaiton, quaternion.identity, ObjectPoolManager.PoolType.ParticleSystem);
+        CameraShaker.Invoke();
     }
 
 
