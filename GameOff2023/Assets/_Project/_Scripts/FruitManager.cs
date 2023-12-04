@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LeaderboardCreatorDemo;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class FruitManager : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class FruitManager : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private int maxFruitIndex = 4;
     [SerializeField] private GameObject ExplosionPS;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private LeaderboardManager leaderboardManager;
 
     private GameObject currentFruit;
 
@@ -34,7 +38,7 @@ public class FruitManager : MonoBehaviour
         {
             currentFruit.transform.position = spawnPoint.position;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !leaderboardManager._usernameInputField.isFocused)
             {
                 StartCoroutine(DropFruit());
             }
@@ -102,7 +106,9 @@ public class FruitManager : MonoBehaviour
         fruit.SetActive(false);
         fruit.SetActive(true);
 
-        // Score += fruit.GetComponent<Fruit>().mergeScore
+        // Update current score
+        gameManager.newScore += fruit.GetComponent<Fruit>().mergeScore;
+
         fruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
 
         SpawnEffects(fruit.transform.position);

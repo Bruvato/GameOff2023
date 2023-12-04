@@ -11,11 +11,11 @@ namespace Dan.Main
     public static class LeaderboardCreator
     {
         public static bool LoggingEnabled { get; set; } = true;
-        
+
         private static LeaderboardCreatorBehaviour _behaviour;
 
         internal static string UserGuid;
-        
+
         private const string FORM_PUBLIC_KEY = "publicKey", FORM_USERNAME = "username", FORM_SCORE = "score",
             FORM_EXTRA = "extra", FORM_USER_GUID = "userGuid";
 
@@ -61,7 +61,7 @@ namespace Dan.Main
         /// (retrieve from https://danqzq.itch.io/leaderboard-creator).</param>
         /// <param name="callback">Returns entries of the leaderboard if the request was successful.</param>
         /// <param name="errorCallback">Returns an error message if the request failed.</param>
-        public static void GetLeaderboard(string publicKey, Action<Entry[]> callback, Action<string> errorCallback = null) => 
+        public static void GetLeaderboard(string publicKey, Action<Entry[]> callback, Action<string> errorCallback = null) =>
             GetLeaderboard(publicKey, LeaderboardSearchQuery.Default, callback, errorCallback);
 
         /// <summary>
@@ -72,9 +72,9 @@ namespace Dan.Main
         /// <param name="isInAscendingOrder">If true, the leaderboard will be sorted in ascending order.</param>
         /// <param name="callback">Returns entries of the leaderboard if the request was successful.</param>
         /// <param name="errorCallback">Returns an error message if the request failed.</param>
-        public static void GetLeaderboard(string publicKey, bool isInAscendingOrder, Action<Entry[]> callback, Action<string> errorCallback = null) => 
+        public static void GetLeaderboard(string publicKey, bool isInAscendingOrder, Action<Entry[]> callback, Action<string> errorCallback = null) =>
             GetLeaderboard(publicKey, isInAscendingOrder, LeaderboardSearchQuery.Default, callback, errorCallback);
-        
+
         /// <summary>
         /// Fetches a leaderboard with the given public key.
         /// </summary>
@@ -93,7 +93,7 @@ namespace Dan.Main
 
             var query = $"?publicKey={publicKey}&userGuid={UserGuid}";
             query += searchQuery.ChainQuery();
-            
+
             _behaviour.SendGetRequest(GetServerURL(Routes.Get, query), callback, errorCallback);
         }
 
@@ -116,10 +116,10 @@ namespace Dan.Main
 
             var query = $"?publicKey={publicKey}&userGuid={UserGuid}&isInAscendingOrder={(isInAscendingOrder ? 1 : 0)}";
             query += searchQuery.ChainQuery();
-            
+
             _behaviour.SendGetRequest(GetServerURL(Routes.Get, query), callback, errorCallback);
         }
-        
+
         /// <summary>
         /// Uploads a new entry to the leaderboard with the given public key.
         /// </summary>
@@ -128,7 +128,7 @@ namespace Dan.Main
         /// <param name="score">The highscore of the player</param>
         /// <param name="callback">Returns true if the request was successful.</param>
         /// <param name="errorCallback">Returns an error message if the request failed.</param>
-        public static void UploadNewEntry(string publicKey, string username, int score, Action<bool> callback = null, Action<string> errorCallback = null) => 
+        public static void UploadNewEntry(string publicKey, string username, int score, Action<bool> callback = null, Action<string> errorCallback = null) =>
             UploadNewEntry(publicKey, username, score, " ", callback, errorCallback);
 
         /// <summary>
@@ -150,8 +150,9 @@ namespace Dan.Main
 
             if (string.IsNullOrEmpty(username))
             {
-                LogError("Username cannot be null or empty!");
-                return;
+                username = "Anonymous";
+                // LogError("Username cannot be null or empty!");
+                // return;
             }
 
             callback += isSuccessful =>
@@ -161,7 +162,7 @@ namespace Dan.Main
                 else
                     Log("Successfully uploaded entry data to leaderboard!");
             };
-            
+
             _behaviour.SendPostRequest(GetServerURL(Routes.Upload), Requests.Form(
                 Requests.Field(FORM_PUBLIC_KEY, publicKey),
                 Requests.Field(FORM_USERNAME, username),
@@ -184,13 +185,13 @@ namespace Dan.Main
                 LogError("Public key cannot be null or empty!");
                 return;
             }
-            
+
             if (string.IsNullOrEmpty(username))
             {
                 LogError("Username cannot be null or empty!");
                 return;
             }
-            
+
             callback += isSuccessful =>
             {
                 if (!isSuccessful)
@@ -198,13 +199,13 @@ namespace Dan.Main
                 else
                     Log("Successfully updated player's username!");
             };
-            
+
             _behaviour.SendPostRequest(GetServerURL(Routes.UpdateUsername), Requests.Form(
                 Requests.Field(FORM_PUBLIC_KEY, publicKey),
                 Requests.Field(FORM_USERNAME, username),
                 Requests.Field(FORM_USER_GUID, UserGuid)), callback, errorCallback);
         }
-        
+
         /// <summary>
         /// Deletes the entry in a leaderboard, with the given public key.
         /// </summary>
@@ -218,7 +219,7 @@ namespace Dan.Main
                 LogError("Public key cannot be null or empty!");
                 return;
             }
-            
+
             callback += isSuccessful =>
             {
                 if (!isSuccessful)
@@ -226,12 +227,12 @@ namespace Dan.Main
                 else
                     Log("Successfully deleted player's entry!");
             };
-            
+
             _behaviour.SendPostRequest(GetServerURL(Routes.DeleteEntry), Requests.Form(
                 Requests.Field(FORM_PUBLIC_KEY, publicKey),
                 Requests.Field(FORM_USER_GUID, UserGuid)), callback, errorCallback);
         }
-        
+
         /// <summary>
         /// Gets the entry data of the player in a leaderboard, with the given public key.
         /// </summary>
@@ -245,11 +246,11 @@ namespace Dan.Main
                 LogError("Public key cannot be null or empty!");
                 return;
             }
-            
-            _behaviour.SendGetRequest(GetServerURL(Routes.GetPersonalEntry, 
+
+            _behaviour.SendGetRequest(GetServerURL(Routes.GetPersonalEntry,
                 $"?publicKey={publicKey}&userGuid={UserGuid}"), callback, errorCallback);
         }
-        
+
         /// <summary>
         /// Resets a player's unique identifier and allows them to submit a new entry to the leaderboard.
         /// </summary>
@@ -263,7 +264,7 @@ namespace Dan.Main
             if (!LoggingEnabled) return;
             Debug.Log($"[LeaderboardCreator] {message}");
         }
-        
+
         internal static void LogError(string message)
         {
             if (!LoggingEnabled) return;

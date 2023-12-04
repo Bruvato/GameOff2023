@@ -9,14 +9,14 @@ namespace LeaderboardCreatorDemo
     public class LeaderboardManager : MonoBehaviour
     {
         [SerializeField] private TMP_Text[] _entryTextObjects;
-        [SerializeField] private TMP_InputField _usernameInputField;
+        [SerializeField] public TMP_InputField _usernameInputField;
 
-// Make changes to this section according to how you're storing the player's score:
-// ------------------------------------------------------------
+        // Make changes to this section according to how you're storing the player's score:
+        // ------------------------------------------------------------
         [SerializeField] private GameManager _exampleGame;
-        
-        private int Score => _exampleGame.Score;
-// ------------------------------------------------------------
+
+        private int Score => _exampleGame.newScore;
+        // ------------------------------------------------------------
 
         private void Start()
         {
@@ -27,7 +27,7 @@ namespace LeaderboardCreatorDemo
         {
             // Q: How do I reference my own leaderboard?
             // A: Leaderboards.<NameOfTheLeaderboard>
-        
+
             Leaderboards.SuikaLeaderBoard.GetEntries(entries =>
             {
                 foreach (var t in _entryTextObjects)
@@ -38,7 +38,7 @@ namespace LeaderboardCreatorDemo
                     _entryTextObjects[i].text = $"{entries[i].Rank}. {entries[i].Username} - {entries[i].Score}";
             });
         }
-        
+
         public void UploadEntry()
         {
             Leaderboards.SuikaLeaderBoard.UploadNewEntry(_usernameInputField.text, Score, isSuccessful =>

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using LeaderboardCreatorDemo;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,17 +11,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform clearEndPoint;
     [SerializeField] private bool gameOver;
     [SerializeField] LeaderboardManager leaderboardManager;
-
     public int Score;
+    public int newScore;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     private void Awake()
     {
         clearer.position = clearStartPoint.position;
         clearer.gameObject.SetActive(false);
+
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) { Restart(); }
+        if (Input.GetKeyDown(KeyCode.R) && !leaderboardManager._usernameInputField.isFocused) { Restart(); }
+
+        Score = (int)Mathf.Lerp(Score, newScore, 10 * Time.deltaTime);
+        scoreText.text = "Score: " + Score.ToString();
+
 
         if (gameOver)
         {
@@ -39,5 +46,7 @@ public class GameManager : MonoBehaviour
     {
         gameOver = true;
         leaderboardManager.UploadEntry();
+        newScore = 0;
     }
+
 }

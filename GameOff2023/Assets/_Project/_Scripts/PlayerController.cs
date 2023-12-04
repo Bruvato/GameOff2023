@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LeaderboardCreatorDemo;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 6f;
     [SerializeField] private float turnSmoothTime = 0.1f;
     private float turnSmoothVelocity;
+    [SerializeField] private LeaderboardManager leaderboardManager;
 
 
     private void Awake()
@@ -31,6 +33,8 @@ public class PlayerController : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        if (leaderboardManager._usernameInputField.isFocused) { horizontal = 0; vertical = 0; }
+
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 
         if (direction.magnitude >= 0.1f)
