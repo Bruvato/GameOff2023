@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LeaderboardCreatorDemo;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform clearStartPoint;
     [SerializeField] Transform clearEndPoint;
     [SerializeField] private bool gameOver;
+    [SerializeField] LeaderboardManager leaderboardManager;
+
+    public int Score;
 
     private void Awake()
     {
@@ -34,5 +38,6 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         gameOver = true;
+        leaderboardManager.UploadEntry();
     }
 }
