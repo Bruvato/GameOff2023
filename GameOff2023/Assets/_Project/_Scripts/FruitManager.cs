@@ -17,7 +17,7 @@ public class FruitManager : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private int maxFruitIndex = 4;
     [SerializeField] private GameObject ExplosionPS;
-    [SerializeField] private GameManager gameManager;
+    // [SerializeField] private GameManager gameManager;
     [SerializeField] private LeaderboardManager leaderboardManager;
 
     private GameObject currentFruit;
@@ -29,8 +29,10 @@ public class FruitManager : MonoBehaviour
         fruitDatabase.CalculateColors();
 
         SpawnFruit(0, spawnPoint.position);
+        SpawnEffects(spawnPoint.position);
 
     }
+
 
     private void Update()
     {
@@ -107,7 +109,7 @@ public class FruitManager : MonoBehaviour
         fruit.SetActive(true);
 
         // Update current score
-        gameManager.newScore += fruit.GetComponent<Fruit>().mergeScore;
+        GameManager.newScore += fruit.GetComponent<Fruit>().mergeScore;
 
         fruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
 

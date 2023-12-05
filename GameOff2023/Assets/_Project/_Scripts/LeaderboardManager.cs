@@ -13,9 +13,9 @@ namespace LeaderboardCreatorDemo
 
         // Make changes to this section according to how you're storing the player's score:
         // ------------------------------------------------------------
-        [SerializeField] private GameManager _exampleGame;
+        // [SerializeField] private GameManager _exampleGame;
 
-        private int Score => _exampleGame.newScore;
+        private int Score => GameManager.newScore;
         // ------------------------------------------------------------
 
         private void Start()

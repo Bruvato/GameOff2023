@@ -8,11 +8,11 @@ public class LoseTrigger : MonoBehaviour
     private float elapsedTime;
     private Color currentColor = new Color(1, 0, 0, 0f);
     [SerializeField] private float duration;
-    private GameManager gameManager;
+    // private GameManager gameManager;
 
     private void Awake()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        // gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     private void OnTriggerStay(Collider other)
@@ -23,7 +23,7 @@ public class LoseTrigger : MonoBehaviour
 
         if (seconds > 6)
         {
-            gameManager.Restart();
+            GameManager.Restart();
             elapsedTime = 0;
         }
         else if (seconds > 1)
