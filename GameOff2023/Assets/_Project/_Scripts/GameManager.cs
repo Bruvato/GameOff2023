@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && !leaderboardManager._usernameInputField.isFocused) { Restart(); }
 
         Score = (int)Mathf.Lerp(Score, newScore, 10 * Time.deltaTime);
-        scoreText.text = "Score: " + Score.ToString();
+        scoreText.text = Score.ToString();
 
 
         if (gameOver)
