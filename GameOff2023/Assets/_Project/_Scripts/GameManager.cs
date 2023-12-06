@@ -4,6 +4,7 @@ using LeaderboardCreatorDemo;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
+        leaderboardManager = FindObjectOfType<LeaderboardManager>();
     }
     private void Start()
     {
@@ -63,7 +65,9 @@ public class GameManager : MonoBehaviour
     public static void Restart()
     {
         gameOver = true;
+
         leaderboardManager.UploadEntry();
+
         newScore = 0;
     }
 

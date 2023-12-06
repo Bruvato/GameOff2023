@@ -20,7 +20,7 @@ public class FruitManager : MonoBehaviour
     // [SerializeField] private GameManager gameManager;
     [SerializeField] private LeaderboardManager leaderboardManager;
 
-    private GameObject currentFruit;
+    public GameObject currentFruit;
 
 
     private void Awake()
@@ -75,6 +75,7 @@ public class FruitManager : MonoBehaviour
 
     public IEnumerator DropFruit()
     {
+        currentFruit.GetComponent<Collider>().enabled = true;
         currentFruit.GetComponent<Rigidbody>().isKinematic = false;
         currentFruit.GetComponent<Rigidbody>().velocity = Vector3.zero;
         currentFruit.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
