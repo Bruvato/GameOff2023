@@ -55,7 +55,6 @@ public class FruitManager : MonoBehaviour
 
         // spawn base fruit game object
         currentFruit = ObjectPoolManager.SpawnObject(fruitPrefab, location, quaternion.identity, ObjectPoolManager.PoolType.GameObject);
-        currentFruit.name = fruitDatabase.GetFruitObject(index).name;
 
         // initialize fruit with properties from fruit database
         currentFruit.GetComponent<Fruit>().index = index;
