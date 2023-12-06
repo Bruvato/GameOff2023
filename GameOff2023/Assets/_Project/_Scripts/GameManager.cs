@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     public static int Score;
     public static int newScore;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private static HighScore highScore;
+
+    private float elapsedTime;
 
 
     private void Awake()
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
             _instance = this;
         }
         leaderboardManager = FindObjectOfType<LeaderboardManager>();
+        highScore = FindObjectOfType<HighScore>();
     }
     private void Start()
     {
@@ -45,7 +49,12 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R) && !leaderboardManager._usernameInputField.isFocused) { Restart(); }
 
-        Score = (int)Mathf.Lerp(Score, newScore, 10 * Time.deltaTime);
+        elapsedTime += Time.deltaTime;
+        float t = Mathf.Clamp01(elapsedTime);
+
+        Score = (int)Mathf.Lerp(Score, newScore, t);
+
+        if (t >= 1f) { elapsedTime = 0f; }
         scoreText.text = Score.ToString();
 
 
@@ -68,6 +77,7 @@ public class GameManager : MonoBehaviour
 
         leaderboardManager.UploadEntry();
 
+        highScore.UpdateScore(newScore);
         newScore = 0;
     }
 
