@@ -31,6 +31,7 @@ public class FruitManager : MonoBehaviour
         SpawnFruit(0, spawnPoint.position);
         SpawnEffects(spawnPoint.position);
 
+
     }
 
 
@@ -38,14 +39,20 @@ public class FruitManager : MonoBehaviour
     {
         if (currentFruit != null)
         {
-            currentFruit.transform.position = spawnPoint.position;
-
             if (Input.GetKeyDown(KeyCode.Space) && !leaderboardManager._usernameInputField.isFocused)
             {
                 StartCoroutine(DropFruit());
             }
 
         }
+    }
+    private void FixedUpdate()
+    {
+        if (currentFruit != null)
+        {
+            currentFruit.transform.position = spawnPoint.position;
+        }
+
     }
 
     public void SpawnFruit(int index, Vector3 location)
@@ -67,20 +74,33 @@ public class FruitManager : MonoBehaviour
         currentFruit.transform.localScale = new Vector3(fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size);
         currentFruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
 
-        // change player size
+        // change player radius
         characterController.radius = fruitDatabase.GetFruitObject(index).size / 2;
 
+        // move character controller to update overlping fruit
+        Collider[] hitColliders = Physics.OverlapSphere(currentFruit.transform.position, fruitDatabase.GetFruitObject(index).size / 2);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.GetComponent<Fruit>() == null)
+            {
+                Vector3 moveDir = -(hitCollider.transform.position - currentFruit.transform.position).normalized;
+                characterController.Move(new Vector3(moveDir.x, 0, moveDir.z));
+            }
+        }
+
+        // release fruit
         currentFruit.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public IEnumerator DropFruit()
     {
-        currentFruit.GetComponent<Collider>().enabled = true;
-        currentFruit.GetComponent<Rigidbody>().isKinematic = false;
-        currentFruit.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        currentFruit.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
+        GameObject previousFruit = currentFruit;
         currentFruit = null;
+
+        previousFruit.GetComponent<Collider>().enabled = true;
+        previousFruit.GetComponent<Rigidbody>().isKinematic = false;
+        previousFruit.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        previousFruit.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         // spawn new fruit after drop
         yield return new WaitForSeconds(delay);

@@ -360,7 +360,19 @@ MonoBehaviour:
   m_CharacterLimit: 8
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1978376617}
+        m_TargetAssemblyTypeName: LeaderboardCreatorDemo.LeaderboardManager, Assembly-CSharp
+        m_MethodName: UploadEntry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -7426,7 +7438,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913843706}
-  m_Material: {fileID: 13400000, guid: 1aed69e44a25c4c1fbf0b0d38a60cbd5, type: 2}
+  m_Material: {fileID: 13400000, guid: 5b44fbb2e9fe27545b55a578320ff263, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -7600,7 +7612,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 0.1, z: 10}
+  m_LocalScale: {x: 3.7, y: 0.1, z: 3.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -8417,7 +8429,7 @@ Transform:
   m_GameObject: {fileID: 1881525204}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.5, z: 0}
+  m_LocalPosition: {x: 0, y: -2.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8437,7 +8449,7 @@ GameObject:
   - component: {fileID: 1885482966}
   - component: {fileID: 1885482971}
   - component: {fileID: 1885482970}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8833,7 +8845,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913843707}
-  m_Material: {fileID: 13400000, guid: 1aed69e44a25c4c1fbf0b0d38a60cbd5, type: 2}
+  m_Material: {fileID: 13400000, guid: 5b44fbb2e9fe27545b55a578320ff263, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -8854,7 +8866,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913843708}
-  m_Material: {fileID: 13400000, guid: 1aed69e44a25c4c1fbf0b0d38a60cbd5, type: 2}
+  m_Material: {fileID: 13400000, guid: 5b44fbb2e9fe27545b55a578320ff263, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -8875,7 +8887,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913843711}
-  m_Material: {fileID: 13400000, guid: 1aed69e44a25c4c1fbf0b0d38a60cbd5, type: 2}
+  m_Material: {fileID: 13400000, guid: 5b44fbb2e9fe27545b55a578320ff263, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9234,7 +9246,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8193708167375889381}
-  m_Material: {fileID: 13400000, guid: 1aed69e44a25c4c1fbf0b0d38a60cbd5, type: 2}
+  m_Material: {fileID: 13400000, guid: 5b44fbb2e9fe27545b55a578320ff263, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
