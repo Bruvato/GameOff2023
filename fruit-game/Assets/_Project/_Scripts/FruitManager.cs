@@ -63,6 +63,9 @@ public class FruitManager : MonoBehaviour
         // spawn base fruit game object
         currentFruit = ObjectPoolManager.SpawnObject(fruitPrefab, location, quaternion.identity, ObjectPoolManager.PoolType.GameObject);
 
+        // set layer to player
+        currentFruit.layer = LayerMask.NameToLayer("Player");
+
         // initialize fruit with properties from fruit database
         currentFruit.GetComponent<Fruit>().index = index;
 
@@ -94,10 +97,11 @@ public class FruitManager : MonoBehaviour
 
     public IEnumerator DropFruit()
     {
+        currentFruit.layer = LayerMask.NameToLayer("Fruit");
         GameObject previousFruit = currentFruit;
         currentFruit = null;
 
-        previousFruit.GetComponent<Collider>().enabled = true;
+
         previousFruit.GetComponent<Rigidbody>().isKinematic = false;
         previousFruit.GetComponent<Rigidbody>().velocity = Vector3.zero;
         previousFruit.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
