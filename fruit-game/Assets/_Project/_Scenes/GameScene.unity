@@ -7157,7 +7157,7 @@ MonoBehaviour:
     type: 3}
   fruitDatabase: {fileID: 11400000, guid: b2eeede9472650e478648d480018b6fe, type: 2}
   spawnPoint: {fileID: 607069999}
-  delay: 1
+  delay: 0.1
   characterController: {fileID: 1885482971}
   maxFruitIndex: 4
   ExplosionPS: {fileID: 5351567977186893115, guid: dc5d8fb147f47de4faec2bbcf12cc439,

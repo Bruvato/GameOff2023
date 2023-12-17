@@ -28,6 +28,8 @@ public class Fruit : MonoBehaviour
             {
                 if (rb.velocity.magnitude > other.gameObject.GetComponent<Rigidbody>().velocity.magnitude)
                 {
+                    Debug.Log("Merging fruits. Upgrading...");
+
                     ObjectPoolManager.ReturnObjectToPool(gameObject);
                     // ObjectPoolManager.ReturnObjectToPool(other.gameObject);
                     fruitManager.UpgradeFruit(other.gameObject);
