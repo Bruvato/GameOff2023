@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        if (leaderboardManager._usernameInputField.isFocused) { horizontal = 0; vertical = 0; }
+        if (leaderboardManager._usernameInputField.isFocused) { return; }
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
 

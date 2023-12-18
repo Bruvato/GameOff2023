@@ -10,6 +10,8 @@ public class Fruit : MonoBehaviour
     [SerializeField] public int mergeScore;
     private FruitManager fruitManager;
     private Rigidbody rb;
+    public float currentScale;
+    public float newScale;
 
     private void Awake()
     {
@@ -17,10 +19,8 @@ public class Fruit : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-
     private void OnCollisionEnter(Collision other)
     {
-
         Fruit otherFruit = other.gameObject.GetComponent<Fruit>();
         if (otherFruit != null)
         {
@@ -28,16 +28,17 @@ public class Fruit : MonoBehaviour
             {
                 if (rb.velocity.magnitude > other.gameObject.GetComponent<Rigidbody>().velocity.magnitude)
                 {
-                    Debug.Log("Merging fruits. Upgrading...");
-
                     ObjectPoolManager.ReturnObjectToPool(gameObject);
-                    // ObjectPoolManager.ReturnObjectToPool(other.gameObject);
                     fruitManager.UpgradeFruit(other.gameObject);
                 }
-
             }
         }
+    }
 
+    private void FixedUpdate()
+    {
+        currentScale = Mathf.Lerp(currentScale, newScale, Time.fixedDeltaTime * 10);
+        transform.localScale = Vector3.one * currentScale;
     }
 
 

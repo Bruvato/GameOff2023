@@ -61,7 +61,7 @@ public class FruitManager : MonoBehaviour
         if (index == 0) { index = UnityEngine.Random.Range(0, maxFruitIndex); }
 
         // spawn base fruit game object
-        currentFruit = ObjectPoolManager.SpawnObject(fruitPrefab, location, quaternion.identity, ObjectPoolManager.PoolType.GameObject);
+        currentFruit = ObjectPoolManager.SpawnObject(fruitPrefab, location, transform.rotation, ObjectPoolManager.PoolType.GameObject);
 
         // set layer to player
         currentFruit.layer = LayerMask.NameToLayer("Player");
@@ -73,8 +73,12 @@ public class FruitManager : MonoBehaviour
         Material newMaterial = new Material(fruitPrefab.GetComponent<Renderer>().sharedMaterial) { color = fruitDatabase.GetFruitObject(index).color };
         currentFruit.GetComponent<Renderer>().sharedMaterial = newMaterial;
 
+        // update scale
+        currentFruit.transform.localScale = Vector3.one * fruitDatabase.GetFruitObject(index).size;
+        currentFruit.GetComponent<Fruit>().currentScale = fruitDatabase.GetFruitObject(index).size;
+        currentFruit.GetComponent<Fruit>().newScale = fruitDatabase.GetFruitObject(index).size;
 
-        currentFruit.transform.localScale = new Vector3(fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size);
+        // update merge score
         currentFruit.GetComponent<Fruit>().mergeScore = fruitDatabase.GetFruitObject(index).mergeScore;
 
         // change player radius
@@ -125,13 +129,12 @@ public class FruitManager : MonoBehaviour
         fruit.GetComponent<Renderer>().sharedMaterial = newMaterial;
 
 
-        fruit.transform.localScale = new Vector3(fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size);
-        // Vector3 newScale = new Vector3(fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size);
-        // fruit.transform.localScale = Vector3.Lerp(fruit.transform.localScale, newScale, 0.01f * Time.deltaTime);
+        // fruit.transform.localScale = new Vector3(fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size, fruitDatabase.GetFruitObject(index).size);
+        fruit.GetComponent<Fruit>().newScale = fruitDatabase.GetFruitObject(index).size;
 
         // Refresh collision
-        fruit.SetActive(false);
-        fruit.SetActive(true);
+        fruit.GetComponent<Rigidbody>().isKinematic = true;
+        fruit.GetComponent<Rigidbody>().isKinematic = false;
 
         // Update current score
         GameManager.newScore += fruit.GetComponent<Fruit>().mergeScore;
@@ -143,7 +146,7 @@ public class FruitManager : MonoBehaviour
 
     public void SpawnEffects(Vector3 locaiton)
     {
-        ObjectPoolManager.SpawnObject(ExplosionPS, locaiton, quaternion.identity, ObjectPoolManager.PoolType.ParticleSystem);
+        ObjectPoolManager.SpawnObject(ExplosionPS, locaiton, transform.rotation, ObjectPoolManager.PoolType.ParticleSystem);
         CameraShaker.Invoke();
     }
 

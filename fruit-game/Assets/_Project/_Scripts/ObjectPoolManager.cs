@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.TextCore.Text;
 
 public class ObjectPoolManager : MonoBehaviour
 {
@@ -49,6 +51,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     //     return null;
     // }
+    private static Vector3 test;
 
 
     public static List<PooledObjectInfo> objectPools = new List<PooledObjectInfo>();
@@ -99,23 +102,24 @@ public class ObjectPoolManager : MonoBehaviour
         //     }
         // }
 
+        // if pool doesn't exist, create it
         if (pool == null)
         {
-            // if pool doesn't exist, create it
             pool = new PooledObjectInfo() { lookupString = objToSpawn.name };
             objectPools.Add(pool);
         }
 
-        GameObject spawnableObj = null;
-        foreach (GameObject o in pool.inactiveObjects)
-        {
-            // if there is an inactive object in pool
-            if (o != null)
-            {
-                spawnableObj = o;
-                break;
-            }
-        }
+        // Check if there are any inactive objects in the pool
+        GameObject spawnableObj = pool.inactiveObjects.FirstOrDefault();
+        // GameObject spawnableObj = null;
+        // foreach (GameObject obj in pool.inactiveObjects)
+        // {
+        //     if (obj != null)
+        //     {
+        //         spawnableObj = obj;
+        //         break;
+        //     }
+        // }
 
         if (spawnableObj == null)
         {
@@ -137,6 +141,7 @@ public class ObjectPoolManager : MonoBehaviour
             pool.inactiveObjects.Remove(spawnableObj);
             spawnableObj.SetActive(true);
         }
+
         return spawnableObj;
     }
 
@@ -144,30 +149,15 @@ public class ObjectPoolManager : MonoBehaviour
     {
         PooledObjectInfo pool = objectPools.Find(p => p.lookupString == objToSpawn.name);
 
-        // PooledObjectInfo pool = null;
-        // foreach (PooledObjectInfo p in objectPools){
-        //     if (p.lookupString == obj.name){
-        //         pool = p;
-        //         break;
-        //     }
-        // }
-
+        // if pool doesn't exist, create it
         if (pool == null)
         {
-            // if pool doesn't exist, create it
             pool = new PooledObjectInfo() { lookupString = objToSpawn.name };
             objectPools.Add(pool);
         }
 
-        GameObject spawnableObj = null;
-        foreach (GameObject o in pool.inactiveObjects)
-        {
-            if (o != null)
-            {
-                spawnableObj = o;
-                break;
-            }
-        }
+        // Check if there are any inactive objects in the pool
+        GameObject spawnableObj = pool.inactiveObjects.FirstOrDefault();
 
         if (spawnableObj == null)
         {
@@ -180,9 +170,9 @@ public class ObjectPoolManager : MonoBehaviour
             pool.inactiveObjects.Remove(spawnableObj);
             spawnableObj.SetActive(true);
         }
+
         return spawnableObj;
     }
-
 
     public static void ReturnObjectToPool(GameObject obj)
     {
@@ -195,9 +185,19 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else
         {
+            if (obj.GetComponent<Fruit>() != null)
+                test = obj.transform.position;
+
             obj.SetActive(false);
             pool.inactiveObjects.Add(obj);
+
         }
+    }
+    public void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(test, 1);
     }
 
     private static GameObject SetParentObject(PoolType poolType)
