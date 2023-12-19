@@ -14,7 +14,7 @@ public class Clearer : MonoBehaviour
         Fruit otherFruit = other.gameObject.GetComponent<Fruit>();
         if (otherFruit != null)
         {
-            ObjectPoolManager.ReturnObjectToPool(other.gameObject);
+            ObjectPooler.Instance.ReturnToPool("Fruit", other.gameObject);
             fruitManager.SpawnEffects(other.gameObject.transform.position);
 
         }

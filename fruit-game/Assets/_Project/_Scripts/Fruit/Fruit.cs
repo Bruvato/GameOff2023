@@ -28,7 +28,7 @@ public class Fruit : MonoBehaviour
             {
                 if (rb.velocity.magnitude > other.gameObject.GetComponent<Rigidbody>().velocity.magnitude)
                 {
-                    ObjectPoolManager.ReturnObjectToPool(gameObject);
+                    ObjectPooler.Instance.ReturnToPool("Fruit", gameObject);
                     fruitManager.UpgradeFruit(other.gameObject);
                 }
             }

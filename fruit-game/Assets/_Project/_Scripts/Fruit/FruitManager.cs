@@ -20,15 +20,16 @@ public class FruitManager : MonoBehaviour
     // [SerializeField] private GameManager gameManager;
     [SerializeField] private LeaderboardManager leaderboardManager;
 
-    public GameObject currentFruit;
+    private GameObject currentFruit;
+    private GameObject previousFruit;
 
 
-    private void Awake()
+    private void Start()
     {
         fruitDatabase.CalculateSizes();
         fruitDatabase.CalculateColors();
 
-        SpawnFruit(0, spawnPoint.position);
+        SpawnFruit(spawnPoint.position);
         SpawnEffects(spawnPoint.position);
 
 
@@ -50,18 +51,19 @@ public class FruitManager : MonoBehaviour
     {
         if (currentFruit != null)
         {
-            currentFruit.transform.position = spawnPoint.position;
+            // currentFruit.transform.position = spawnPoint.position;
+            currentFruit.GetComponent<Rigidbody>().MovePosition(spawnPoint.position);
         }
 
     }
 
-    public void SpawnFruit(int index, Vector3 location)
+    public void SpawnFruit(Vector3 location)
     {
-        // choose random index if i = 0
-        if (index == 0) { index = UnityEngine.Random.Range(0, maxFruitIndex); }
+        // choose random index
+        int index = UnityEngine.Random.Range(0, maxFruitIndex);
 
         // spawn base fruit game object
-        currentFruit = ObjectPoolManager.SpawnObject(fruitPrefab, location, transform.rotation, ObjectPoolManager.PoolType.GameObject);
+        currentFruit = ObjectPooler.Instance.SpawnFromPool("Fruit", location, transform.rotation);
 
         // set layer to player
         currentFruit.layer = LayerMask.NameToLayer("Player");
@@ -95,24 +97,26 @@ public class FruitManager : MonoBehaviour
             }
         }
 
-        // release fruit
+        // dont fall
         currentFruit.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public IEnumerator DropFruit()
     {
-        currentFruit.layer = LayerMask.NameToLayer("Fruit");
-        GameObject previousFruit = currentFruit;
+        previousFruit = currentFruit;
         currentFruit = null;
 
+        // change layer to fruit
+        previousFruit.layer = LayerMask.NameToLayer("Fruit");
 
+        // fall
         previousFruit.GetComponent<Rigidbody>().isKinematic = false;
         previousFruit.GetComponent<Rigidbody>().velocity = Vector3.zero;
         previousFruit.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        // spawn new fruit after drop
+        // spawn new fruit after delay
         yield return new WaitForSeconds(delay);
-        SpawnFruit(0, spawnPoint.position);
+        SpawnFruit(spawnPoint.position);
 
 
     }
@@ -146,7 +150,7 @@ public class FruitManager : MonoBehaviour
 
     public void SpawnEffects(Vector3 locaiton)
     {
-        ObjectPoolManager.SpawnObject(ExplosionPS, locaiton, transform.rotation, ObjectPoolManager.PoolType.ParticleSystem);
+        ObjectPooler.Instance.SpawnFromPool("Particle", locaiton, transform.rotation);
         CameraShaker.Invoke();
     }
 

@@ -6,6 +6,6 @@ public class ReturnParticlesToPool : MonoBehaviour
 {
     private void OnParticleSystemStopped()
     {
-        ObjectPoolManager.ReturnObjectToPool(gameObject);
+        ObjectPooler.Instance.ReturnToPool("Particle", gameObject);
     }
 }
